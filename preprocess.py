@@ -15,28 +15,36 @@ def iterctr(items, n):
 
         yield item
 
-sentences = []
+def run():
+    sentences = []
 
-if not os.path.exists(sentences_path):
-    print('Sentences not found. Constructing ...')
-    with open('data/train.csv', 'rt') as f:
-        reader = csv.DictReader(f)
-        for row in iterctr(reader, 10000):
-            sentences.append(list(gensim.utils.tokenize(row['question1'], lowercase=True)))
-            sentences.append(list(gensim.utils.tokenize(row['question2'], lowercase=True)))
+    if not os.path.exists(sentences_path):
+        print('Sentences not found. Constructing ...')
+        with open('data/train.csv', 'rt') as f:
+            reader = csv.DictReader(f)
+            for row in iterctr(reader, 10000):
+                sentences.append(list(gensim.utils.tokenize(row['question1'], lowercase=True)))
+                sentences.append(list(gensim.utils.tokenize(row['question2'], lowercase=True)))
 
-    with open(sentences_path, 'w') as outfile:
-        json.dump(sentences, outfile)
-else:
-    print('Sentences found. Constructing ...')
-    with open(sentences_path) as data_file:
-        sentences = json.load(data_file)
+        with open(sentences_path, 'w') as outfile:
+            json.dump(sentences, outfile)
+    else:
+        print('Sentences found. Constructing ...')
+        with open(sentences_path) as data_file:
+            sentences = json.load(data_file)
 
-print('Sentences constructed')
+    print('Sentences constructed')
 
-if not os.path.exists(model_path):
-    print('Model not found. Training and saving ...')
-    model = gensim.models.Word2Vec(sentences, min_count=1)
-    model.save(model_path)
+    if not os.path.exists(model_path):
+        print('Model not found. Training and saving ...')
+        model = gensim.models.Word2Vec(sentences, min_count=1)
+        model.save(model_path)
+    else:
+        model = gensim.models.Word2Vec.load(model_path)
 
-print('Model trained and saved')
+    print('Model trained and saved')
+
+    return model
+
+if __name__ == "__main__":
+    run()
