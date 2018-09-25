@@ -1,11 +1,11 @@
 import pandas
 import keras
 
-import preprocess
+import word2vec
 
 MAX_SEQ_LENGTH = 100
 
-word2vec_model = preprocess.run()
+word2vec_model = word2vec.run()
 
 data_df = pandas.read_csv("data/train.csv")
 
