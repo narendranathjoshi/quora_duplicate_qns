@@ -1,3 +1,5 @@
 .vscode
-data
-proc
+data/*
+!data/.keep
+proc/*
+!proc/.keep
