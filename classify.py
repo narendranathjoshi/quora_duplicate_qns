@@ -21,10 +21,13 @@ def create_embedding_layer():
 
     return embedding_layer
 
-# train_size = int(len(data_df) * .8)
+def tokenize_data():
+    train_size = int(len(data_df) * .8)
 
-# train_X = data_df[['question1', 'question2']][:train_size]
-# train_Y = data_df['is_duplicate'][:train_size]
+    # Use numpy.concatenate to build feature vector
 
-# val_X = data_df[['question1', 'question2']][train_size:]
-# val_Y = data_df['is_duplicate'][train_size:]
+    train_X = data_df[['question1', 'question2']][:train_size]
+    train_Y = data_df['is_duplicate'][:train_size]
+
+    val_X = data_df[['question1', 'question2']][train_size:]
+    val_Y = data_df['is_duplicate'][train_size:]
