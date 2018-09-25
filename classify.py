@@ -21,6 +21,8 @@ def tokenize_data(data_df):
         tokens = list(gensim.utils.tokenize(row['question1'], lowercase=True))
         tokens2 = list(gensim.utils.tokenize(row['question2'], lowercase=True))
         
+        ### Has an issue with (tokenize), unicode issues? Not clean data? Investigate more
+
         if tokens and tokens2:
             vectors = np.array(word2vec_model[tokens[0]])
                     
